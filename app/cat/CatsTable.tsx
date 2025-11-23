@@ -11,7 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import type { cat as Cat } from "@/types/cat";
+import type { unit as Cat } from "@/types/cat";
 
 interface Props {
   cats: Cat[];
@@ -129,7 +129,7 @@ export default function CatsTable({
           <TableBody>
             {cats.map((cat) => (
               <TableRow
-                key={`${cat.Id}-${cat.Formt}`}
+                key={`${cat.Id}-${cat.Form}`}
                 className="cursor-pointer hover:bg-gray-50"
                 onClick={() => onSelect(cat)}
               >

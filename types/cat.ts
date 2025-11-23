@@ -144,11 +144,11 @@ export type ability =
 // 원거리 공격 - [44]가 시작 범위, [45]가 공격범위 -> 사거리는 44 ~ 44 + 45
 // 전방위 공격 - [45]가 음수면 전방위, 
 
-export interface cat {
+export interface unit {
     Id: number,     // ID
     Name: string,   // 이름
     Descriptiont: string, // 설명
-    Formt: number,   // 진화 단계
+    Form: number,   // 진화 단계
     Image: string | null,   // 이미지 주소
     Rarity: string,         // 등급
     Targets: trait[],        // 타겟 속성[]

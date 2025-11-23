@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { ability, cat as Cat } from "@/types/cat";
+import type { ability, unit as Cat } from "@/types/cat";
 
 import CatDetailDialog from "./CatDetailDialog";
 import CatsTable from "./CatsTable";

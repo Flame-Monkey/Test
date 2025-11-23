@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import { cat, trait, attackType, affect, ability } from "@/types/cat";
+import { unit, trait, attackType, affect, ability } from "@/types/cat";
 
 // 경로 설정
 const UNIT_DIR = "./data/unit";
@@ -157,7 +157,7 @@ function getAttackTypes(values: number[]): attackType[] {
 // ──────────────────────────────────────────────
 // CSV 하나 파싱
 // ──────────────────────────────────────────────
-function loadOneCSV(num: number, form: number, name: string, descMap: Map<number, string[]>): cat | null {
+function loadOneCSV(num: number, form: number, name: string, descMap: Map<number, string[]>): unit | null {
     const dir = path.join(UNIT_DIR, num.toString().padStart(3, "0"));
     const csvPath = path.join(dir, `unit${num.toString().padStart(3, "0")}.csv`);
 
@@ -190,7 +190,7 @@ function loadOneCSV(num: number, form: number, name: string, descMap: Map<number
     return {
         Id: num,
         Name: name,
-        Formt: form,
+        Form: form,
         Descriptiont: description,   // ⭐추가⭐
         Image: null,
         Rarity: "unknown",
@@ -216,11 +216,11 @@ function loadOneCSV(num: number, form: number, name: string, descMap: Map<number
 // ──────────────────────────────────────────────
 // 전체 유닛 로드
 // ──────────────────────────────────────────────
-export function loadAllCats(): cat[] {
+export function loadAllCats(): unit[] {
     const nameMap = loadUnitNames();
     const descMap = loadDescriptions();
 
-    const arr: cat[] = [];
+    const arr: unit[] = [];
 
     for (const [num, names] of nameMap.entries()) {
         for (let form = 0; form < names.length; form++) {

@@ -1,20 +1,20 @@
 import { notFound } from "next/navigation";
-import { loadCatsById } from "@/lib/catsLoader";
-import Image from "next/image";
-import { loadAllCats } from "@/lib/loadcats";
+import { loadEnemiesById } from "@/lib/catLoader";
+import { loadAllEnemies } from "@/lib/enemyLoader";
+import type { unit } from "@/types/cat";
 
 interface PageProps {
     params: Promise<{ id: string }>;
 }
 
 export function generateStaticParams() {
-    const cats = loadAllCats();
-    return cats.map(cat => ({
-        id: cat.Id.toString().padStart(3, "0"),
+    const enemies = loadAllEnemies();
+    return enemies.map(enemy => ({
+        id: enemy.Id.toString().padStart(3, "0"),
     }));
 }
 
-export default async function CatDetailPage({ params }: PageProps) {
+export default async function EnemyDetailPage({ params }: PageProps) {
     const { id } = await params;
     const numericId = parseInt(id);
 
@@ -22,37 +22,36 @@ export default async function CatDetailPage({ params }: PageProps) {
         notFound();
     }
 
-    // id에 해당하는 모든 폼 불러오기
-    const cats = loadCatsById(numericId);
+    const enemies = loadEnemiesById(numericId);
 
-    if (!cats || cats.length === 0) {
+    if (!enemies || enemies.length === 0) {
         notFound();
     }
 
     return (
         <div className="min-h-screen bg-gray-100 font-sans leading-relaxed">
             {/* Header */}
-            <header className="bg-gradient-to-br from-blue-600 to-blue-400 text-white py-8">
+            <header className="bg-gradient-to-br from-red-600 to-red-400 text-white py-8">
                 <div className="max-w-6xl mx-auto px-4 md:px-8">
                     <a
-                        href="/cat"
+                        href="/enemy"
                         className="inline-block mb-4 text-white/90 hover:text-white transition-colors"
                     >
-                        ← 켓 목록으로 돌아가기
+                        ← 적 목록으로 돌아가기
                     </a>
 
                     <div className="text-4xl font-bold">
-                        유닛 #{numericId}
+                        적 #{numericId}
                     </div>
                     <div className="text-lg opacity-80">
-                        {cats[0].Name}
+                        {enemies[0].Name}
                     </div>
                 </div>
             </header>
 
             {/* Main Content */}
             <main className="max-w-5xl mx-auto px-4 md:px-8 py-12 space-y-10">
-                {cats.map((cat, idx) => (
+                {enemies.map((enemy, idx) => (
                     <div
                         key={idx}
                         className="bg-white shadow-lg rounded-2xl overflow-hidden"
@@ -60,10 +59,10 @@ export default async function CatDetailPage({ params }: PageProps) {
                         {/* Form Header */}
                         <div className="bg-gray-200 px-6 py-4 flex justify-between items-center">
                             <div className="text-xl font-bold">
-                                {cat.Name} — {cat.Form + 1}단계
+                                {enemy.Name} — {enemy.Form + 1}단계
                             </div>
                             <div className="text-gray-600 text-sm">
-                                Form {cat.Form}
+                                Form {enemy.Form}
                             </div>
                         </div>
 
@@ -71,12 +70,11 @@ export default async function CatDetailPage({ params }: PageProps) {
                             {/* Left — Image + Description */}
                             <div className="space-y-4">
                                 <div className="bg-gray-50 rounded-xl h-64 flex items-center justify-center">
-                                    {cat.Image ? (
-                                        <Image
-                                            src={cat.Image}
-                                            alt={cat.Name}
-                                            width={220}
-                                            height={220}
+                                    {enemy.Image ? (
+                                        <img
+                                            src={enemy.Image}
+                                            alt={enemy.Name}
+                                            className="max-h-56"
                                         />
                                     ) : (
                                         <span className="text-gray-500">
@@ -91,35 +89,37 @@ export default async function CatDetailPage({ params }: PageProps) {
                                     </div>
                                     <div
                                         className="text-gray-800 text-sm leading-relaxed"
-                                        dangerouslySetInnerHTML={{ __html: cat.Descriptiont }}
+                                        dangerouslySetInnerHTML={{ __html: enemy.Descriptiont }}
                                     />
                                 </div>
                             </div>
 
                             {/* Right — Stats */}
                             <div className="space-y-4">
+                                {/* 기본 스탯 */}
                                 <div className="bg-gray-50 p-4 rounded-xl">
                                     <div className="text-sm text-gray-600 mb-2">
                                         기본 스탯
                                     </div>
                                     <ul className="text-gray-800 text-sm space-y-1">
-                                        <li>HP: {cat.Hp}</li>
-                                        <li>공격력: {cat.Atk}</li>
-                                        <li>사거리: {cat.Range}</li>
-                                        <li>속도: {cat.Speed}</li>
-                                        <li>재생산: {cat.RespawnHalf / 2}</li>
-                                        <li>TBA(공격 간격): {cat.Tba}</li>
-                                        <li>선딜: {cat.PreAttackframe}</li>
-                                        <li>폭: {cat.Width}</li>
+                                        <li>HP: {enemy.Hp}</li>
+                                        <li>공격력: {enemy.Atk}</li>
+                                        <li>사거리: {enemy.Range}</li>
+                                        <li>속도: {enemy.Speed}</li>
+                                        <li>재생산: {enemy.RespawnHalf / 2}</li>
+                                        <li>TBA(공격 간격): {enemy.Tba}</li>
+                                        <li>선딜: {enemy.PreAttackframe}</li>
+                                        <li>폭: {enemy.Width}</li>
                                     </ul>
                                 </div>
 
+                                {/* 공격 타입 */}
                                 <div className="bg-gray-50 p-4 rounded-xl">
                                     <div className="text-sm text-gray-600 mb-2">
                                         공격 타입
                                     </div>
                                     <div className="flex flex-wrap gap-2">
-                                        {cat.AttackType.map((t, i) => (
+                                        {enemy.AttackType.map((t, i) => (
                                             <span key={i} className="px-2 py-1 bg-blue-100 text-blue-600 rounded-md text-xs">
                                                 {t}
                                             </span>
@@ -127,12 +127,13 @@ export default async function CatDetailPage({ params }: PageProps) {
                                     </div>
                                 </div>
 
+                                {/* 속성 */}
                                 <div className="bg-gray-50 p-4 rounded-xl">
                                     <div className="text-sm text-gray-600 mb-2">
                                         속성(Target traits)
                                     </div>
                                     <div className="flex flex-wrap gap-2">
-                                        {cat.Targets.map((t, i) => (
+                                        {enemy.Targets.map((t, i) => (
                                             <span key={i} className="px-2 py-1 bg-purple-100 text-purple-600 rounded-md text-xs">
                                                 {t}
                                             </span>
@@ -140,13 +141,14 @@ export default async function CatDetailPage({ params }: PageProps) {
                                     </div>
                                 </div>
 
+                                {/* 능력 */}
                                 <div className="bg-gray-50 p-4 rounded-xl">
                                     <div className="text-sm text-gray-600 mb-2">
                                         특수 능력(Abilities)
                                     </div>
-                                    {cat.Abilities.length > 0 ? (
+                                    {enemy.Abilities.length > 0 ? (
                                         <div className="flex flex-wrap gap-2">
-                                            {cat.Abilities.map((a, i) => (
+                                            {enemy.Abilities.map((a, i) => (
                                                 <span key={i} className="px-2 py-1 bg-green-100 text-green-700 rounded-md text-xs">
                                                     {a}
                                                 </span>

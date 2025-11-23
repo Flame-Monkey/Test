@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import type { cat as Cat } from "@/types/cat";
+import type { unit as Cat } from "@/types/cat";
 import Link from "next/link";
 
 interface Props {

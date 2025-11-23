@@ -1,19 +1,3 @@
-export interface Enemy {
-  id: number;
-  name: string;
-  nameKo: string;
-  attributes: string[];
-  effects: string[];
-  abilities: string[];
-  hp: number;
-  attack: number;
-  range: number;
-  speed: number;
-  knockbackCount: number;
-  magnification: number;
-}
-
-
 export interface EnemySpawn {
   name: string;
   nameKo: string;
