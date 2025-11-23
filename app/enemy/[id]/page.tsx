@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import { loadEnemiesById } from "@/lib/catsLoader";
 import { loadAllEnemies } from "@/lib/enemyLoader";
-import type { unit } from "@/types/cat";
 
 interface PageProps {
     params: Promise<{ id: string }>;
