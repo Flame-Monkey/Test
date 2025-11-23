@@ -127,13 +127,13 @@ export default function CatDetailDialog({
           <div className="flex items-center justify-between">
 
             {/* Title */}
-            <div>
-              <Link href={`/cat/${paddedId}`}>
+            <Link href={`/cat/${selectedCat.Id.toString().padStart(3, "0")}`}>
+              <div>
                 <DialogTitle className="text-blue-600 cursor-pointer hover:underline">
                   {selectedCat.Name}
                 </DialogTitle>
-              </Link>
-            </div>
+              </div>
+            </Link>
 
             {/* Level Control */}
             <div className="flex items-center gap-2">

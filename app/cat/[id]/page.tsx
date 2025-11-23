@@ -9,9 +9,9 @@ interface PageProps {
 
 export function generateStaticParams() {
     const cats = loadAllCats();
-  return cats.map(cat => ({
-    id: String(cat.Id),
-  }));
+    return cats.map(cat => ({
+        id: cat.Id.toString().padStart(3, "0"),
+    }));
 }
 
 export default async function CatDetailPage({ params }: PageProps) {
@@ -34,8 +34,8 @@ export default async function CatDetailPage({ params }: PageProps) {
             {/* Header */}
             <header className="bg-gradient-to-br from-blue-600 to-blue-400 text-white py-8">
                 <div className="max-w-6xl mx-auto px-4 md:px-8">
-                    <a 
-                        href="/cat" 
+                    <a
+                        href="/cat"
                         className="inline-block mb-4 text-white/90 hover:text-white transition-colors"
                     >
                         ← 켓 목록으로 돌아가기
@@ -53,7 +53,7 @@ export default async function CatDetailPage({ params }: PageProps) {
             {/* Main Content */}
             <main className="max-w-5xl mx-auto px-4 md:px-8 py-12 space-y-10">
                 {cats.map((cat, idx) => (
-                    <div 
+                    <div
                         key={idx}
                         className="bg-white shadow-lg rounded-2xl overflow-hidden"
                     >
@@ -89,7 +89,7 @@ export default async function CatDetailPage({ params }: PageProps) {
                                     <div className="text-sm text-gray-600 mb-1">
                                         설명
                                     </div>
-                                    <div 
+                                    <div
                                         className="text-gray-800 text-sm leading-relaxed"
                                         dangerouslySetInnerHTML={{ __html: cat.Descriptiont }}
                                     />
