@@ -33,12 +33,12 @@ export default function StagePage({ stages, enemies }: StagePageProps) {
       <StageDetailDialog
         stage={selectedStage}
         enemies={enemies}
-        onSelectEnemy={(enemy, mult) => {
+        onSelectEnemy={(enemy: Enemy, mult: number) => {
           setSelectedEnemy(enemy);
           setEnemyMultiplier(mult);
           setIsEnemyDialog(true);
         }}
-        onOpenChange={(open) => {
+        onOpenChange={(open: boolean) => {
           if (!open) {
             setSelectedStage(null);
             setIsEnemyDialog(false);
